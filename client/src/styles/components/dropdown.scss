@@ -1,0 +1,36 @@
+.dropdown{
+    position: absolute;
+    top: 50px;
+    right: 0;
+    transform: translateX(-10px);
+    background-color: #181E29;
+    border: 1px solid #353C4A;
+    border-radius: 22px;
+    flex-direction: column;
+    .dropdownlist{
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        li{
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            &:hover{
+                background-color: #353C4A;
+            }
+        }
+        .first{
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        .second{
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .stroke{
+            border-top: 1px solid #353C4A;
+        }
+    }
+}
+

@@ -1,0 +1,74 @@
+.header {
+    background-color: inherit;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+}
+
+.nav {
+    display: flex;
+    gap: 1rem;
+    padding: 15px;
+    transform: scale(1.8);
+    .loginBTN{
+        background-color: #181E29;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        border: 1px solid #353C4A;
+        cursor: pointer;
+        display: flex  ;
+        gap: 2px;
+        justify-content: center;
+        align-items: center;
+    }
+    .register{
+        background-color: #144EE3;
+        color: white;
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border: none;
+    }
+}
+
+.space{
+    width: 20%;
+}
+
+.user{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background-color: #181E29;
+    border: 1px solid #353C4A;
+    border-radius: 20px;
+    transform: scale(1.2);
+}
+
+
+.info {
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  
+  .Greeting {
+    font-size: 6px;
+    color: #bbb;
+    padding-bottom: 1px;
+  }
+  
+  .name {
+    font-size: 12px;
+    color: #fff;
+  }
+
+.brName{
+    font-size: 40px;
+    background: linear-gradient(90deg,#EB568E, #A353AA , #144EE3 );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

@@ -1,0 +1,8 @@
+
+#env file 
+Backend/.env
+client/.env
+
+#node modules 
+Backend/node_modules
+client/node_modules

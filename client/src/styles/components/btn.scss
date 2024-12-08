@@ -1,0 +1,9 @@
+.logoutBtn , .homeBtn , .historyBtn{
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    gap: 2px;
+    flex-direction: row;
+}
+

@@ -11,10 +11,12 @@ await connectToMongoDb(process.env.MONGOURL);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.listen(PORT, () => {console.log(`Server is running on port ${PORT}`);}); 
+
 app.use(cors(
     {
         origin: process.env.FRONTENDURL,
-        methods: ["GET" , "POST" , "DELETE" , "PATCH" , "PUT"],
+        methods: ["GET" , "POST" , "DELETE" , "PATCH" , "PUT"],     
         credentials: true
     }
 ));
@@ -26,4 +28,3 @@ app.use(cookieParser());
 app.use('/url', urlRouter);
 app.use("/user" , userRouter);
 
-app.listen(PORT, () => {console.log(`Server is running on port ${PORT}`);}); 

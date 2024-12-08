@@ -71,6 +71,9 @@ function logoutUser(req, res) {
 
 function getUser(req, res) {
     const token = req.cookies.token;
+    if(!token) {
+        return res.status(200).json({ name : null , email : null , id : null });
+    }
     jwt.verify(token , process.env.JWTPRIVATEKEY , (err , decoded) => {
         if (err) {
             return res.status(500).json({ error : err.message });

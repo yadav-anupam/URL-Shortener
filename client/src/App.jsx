@@ -14,13 +14,15 @@ function App() {
   const dispatch = useDispatch();
   const isLoggedin = useSelector((state) => state.auth.status) ;
   useEffect(() => {
-    if(!isLoggedin){
-      axios.get('/user').then((res) => {
-        dispatch(login(res.data));
+    if(!isLoggedin ){
+      axios.get('/user').then(({data}) => {
+        if(data.name !== null && data.email !== null && data._id !== null){
+          dispatch(login(data));
+        }
       }).catch((err) => {
+        console.error('Error fetching user:', err);
       });
     }
-    
   }, []);
   return (
     <>

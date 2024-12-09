@@ -15,51 +15,76 @@ async function generateNewShortUrl(req , res) {
     const token = req.cookies.token;
     const userId = getUserId(token);
     const shortId = nanoid(10);
-
-    const entry = await Url.findOne({ userId , redirectUrl: req.body.redirectUrl });
-    if(entry) {
-        return res.status(201).json({ shortId: entry.shortId });
+    try {
+        const entry = await Url.findOne({ userId , redirectUrl: req.body.redirectUrl });
+        if(entry) {
+            return res.status(201).json({ shortId: entry.shortId });
+        }
     }
-    
-    await Url.create({ 
-        shortId, 
-        redirectUrl: req.body.redirectUrl ,
-        visitHistory: [],
-        userId 
-    });
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 
-    return res.status(201).json({ shortId });
+    try{
+        await Url.create({
+            shortId,
+            redirectUrl: req.body.redirectUrl,
+            visitHistory: [],
+            userId
+        });
+        return res.status(201).json({ shortId });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 }
 
 async function getAnalytics(req, res) {
     const shortId = req.params.shortId;
-    const entry = await Url.findOne({ shortId });
-    if(!entry) {
-        return res.status(404).json({ error: "Short URL not found" });
+
+    try {
+        const entry = await Url.findOne({ shortId });
+        if(!entry) {
+            return res.status(404).json({ error: "Short URL not found" });
+        }
+        return res.status(200).json({ totalclicks: entry.visitHistory.length });
     }
-    return res.status(200).json({ totalclicks: entry.visitHistory.length });
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 }
 
 async function redirect(req, res) {
     const shortId = req.params.shortId;
-    const entry = await Url.findOneAndUpdate({ 
-        shortId },{
-        $push: { visitHistory: {
-            timestamps : Date.now()
-        } }
-        }
-    );
-    const redirectUrl = entry.redirectUrl ?? null;
-    //console.log(redirectUrl);
-    return res.status(200).json({ targetUrl: redirectUrl });
+
+
+    try{
+        const entry = await Url.findOneAndUpdate({ 
+            shortId },{
+            $push: { visitHistory: {
+                timestamps : Date.now()
+            } }
+            }
+        );
+        const redirectUrl = entry.redirectUrl ?? null;
+        return res.status(200).json({ targetUrl: redirectUrl });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 }
 
 async function getHistory(req , res ) {
     const token = req.cookies.token;
     const userId = getUserId(token);
     //console.log(userId);
-    const history = await Url.find({ userId });
-    return res.status(200).json({ history });   
+    try {
+        const history = await Url.find({ userId });
+        return res.status(200).json({ history });
+    }
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 }
 
 export { generateNewShortUrl , getAnalytics , redirect , getHistory};

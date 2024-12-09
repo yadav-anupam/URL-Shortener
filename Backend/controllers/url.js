@@ -3,29 +3,31 @@ import Url from "../models/url.js";
 import jwt from "jsonwebtoken";
 
 function getUserId(token) {
-    return jwt.verify(token , process.env.JWTPRIVATEKEY , (err , decoded) => decoded['id']);
+    const secret = process.env.JWTPRIVATEKEY;
+    try {
+        const decoded = jwt.verify(token, secret);
+        return decoded.id;
+    }
+    catch (error) {
+        return null;
+    }
 }
 
 async function generateNewShortUrl(req , res) {
     const body = req.body;
     if(!body.redirectUrl) {
         return res.status(400).json({ error: "redirectUrl is required" });
-    }   
+    } 
 
-    const token = req.cookies.token;
-    const userId = getUserId(token);
+    const token = req.cookies?.token ?? null;
+    const userId = body.userId ?? getUserId(token);
     const shortId = nanoid(10);
-    try {
+
+    try{
         const entry = await Url.findOne({ userId , redirectUrl: req.body.redirectUrl });
         if(entry) {
             return res.status(201).json({ shortId: entry.shortId });
         }
-    }
-    catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-
-    try{
         await Url.create({
             shortId,
             redirectUrl: req.body.redirectUrl,
@@ -77,7 +79,6 @@ async function redirect(req, res) {
 async function getHistory(req , res ) {
     const token = req.cookies.token;
     const userId = getUserId(token);
-    //console.log(userId);
     try {
         const history = await Url.find({ userId });
         return res.status(200).json({ history });

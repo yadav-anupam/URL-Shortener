@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 
 export default function MainPage() {
     const isLoggedIn = useSelector((state) => state.auth.status);
+    const userID = useSelector((state) => state.auth.userData?.id ?? null);
+    console.log(userID);
     const [shortId, setShortId] = useState(null);
 
 
@@ -16,7 +18,7 @@ export default function MainPage() {
         ev.preventDefault();
         const redirectUrl = ev.target.redirectUrl.value ;
         try {
-            const {data} = await axios.post('/url/', {redirectUrl });
+            const {data} = await axios.post('/url/', {redirectUrl , userId : userID});
             setShortId(data.shortId);
         }
         catch(error) {

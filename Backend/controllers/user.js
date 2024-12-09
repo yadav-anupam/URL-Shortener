@@ -31,6 +31,13 @@ async function login(req, res) {
     const { email, password } = req.body;
     const secret = process.env.JWTPRIVATEKEY;
 
+    const options = {
+        expires:new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000 ),
+        secure: true,
+        httpOnly:true,
+        sameSite: 'None',
+    };
+
     try {
         const user = await User.findOne({ email });
         if (user) {
@@ -40,7 +47,7 @@ async function login(req, res) {
                     if (err) {
                         return res.status(500).json({ error : err.message });
                     }
-                    return res.status(200).cookie('token' , token).json({ name :user.name , email : user.email , id : user._id });
+                    return res.status(200).cookie('token' , token , options ).json({ name :user.name , email : user.email , id : user._id });
                 });
                 
             }

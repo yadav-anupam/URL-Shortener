@@ -19,6 +19,7 @@ app.use(cors(
         origin: `${process.env.FRONTENDURL}`,
         methods: ["GET" , "POST" , "DELETE" , "PATCH" , "PUT"],     
         credentials: true,
+        headers: ['Content-Type', 'Authorization'] 
     }
 ));
 

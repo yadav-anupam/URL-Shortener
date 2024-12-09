@@ -14,7 +14,7 @@ export default function dropdown ({toggleDropdown, isOpen}) {
     const dispatch = useDispatch();
     async function handleLogout() {
         try {
-            await axios.get('/user/logout');
+            await axios.post('/user/logout');
             toggleDropdown();
             dispatch(logout());
             toast.success('Logged out successfully');

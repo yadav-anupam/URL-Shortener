@@ -8,8 +8,6 @@ const salt = bcrypt.genSaltSync(10);
 async function createUser(req, res) {
     const {name , password , email} = req.body;
     const hashedPassword = bcrypt.hashSync(password, salt);
-    console.log(`request in createUser : ${req.body}`);
-    console.log(`name : ${name} , password : ${password} , email : ${email}`);
     try {
         const user = await User.create({
             name: name,
@@ -47,7 +45,7 @@ async function login(req, res) {
                     if (err) {
                         return res.status(500).json({ error : err.message });
                     }
-                    return res.status(200).cookie('token' , token , options ).json({ name :user.name , email : user.email , id : user._id });
+                    return res.status(200).cookie('token' , token ).json({ name :user.name , email : user.email , id : user._id });
                 });
                 
             }
@@ -74,7 +72,7 @@ function logoutUser(req, res) {
 }
 
 function getUser(req, res) {
-    const token = req.cookies.token;
+    const token = req.cookies?.token ?? null;
     if(!token) {
         return res.status(200).json({ name : null , email : null , id : null });
     }

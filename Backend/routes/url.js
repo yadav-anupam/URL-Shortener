@@ -6,6 +6,6 @@ const router = express.Router();
 router.post("/" , generateNewShortUrl);
 router.get("/analytics/:shortId", getAnalytics);
 router.get("/red/:shortId", redirect);
-router.get("/history" , getHistory);
+router.post("/history" , getHistory);
 
 export default router;

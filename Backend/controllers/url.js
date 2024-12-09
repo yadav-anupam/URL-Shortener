@@ -18,7 +18,6 @@ async function generateNewShortUrl(req , res) {
     if(!body.redirectUrl) {
         return res.status(400).json({ error: "redirectUrl is required" });
     } 
-
     const token = req.cookies?.token ?? null;
     const userId = body.userId ?? getUserId(token);
     const shortId = nanoid(10);
@@ -59,7 +58,6 @@ async function getAnalytics(req, res) {
 async function redirect(req, res) {
     const shortId = req.params.shortId;
 
-
     try{
         const entry = await Url.findOneAndUpdate({ 
             shortId },{
@@ -78,7 +76,7 @@ async function redirect(req, res) {
 
 async function getHistory(req , res ) {
     const token = req.cookies.token;
-    const userId = getUserId(token);
+    const userId = req.body.userId ?? getUserId(token);
     try {
         const history = await Url.find({ userId });
         return res.status(200).json({ history });

@@ -13,6 +13,7 @@ export default function history(){
     const [history, setHistory] = useState([]); 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const userID = useSelector((state) => state.auth.userData?.id ?? null);
 
     const homePageUrl = `${window.location.protocol}//${window.location.host}`;
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function history(){
             if (!isLoggedIn) return;
             try {
                 setLoading(true); // Start loading
-                const response = await axios.get('/url/history');
+                const response = await axios.post('/url/history' ,  { userId : userID });
                 const data = response.data.history;
                 setHistory(Array.isArray(data) ? data : [data].reverse());
             } catch (err) {

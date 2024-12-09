@@ -15,10 +15,10 @@ app.listen(PORT, () => {console.log(`Server is running on port ${PORT}`);});
 
 
 app.use(cors(
-    {
+    {   
+        credentials: true,
         origin: `${process.env.FRONTENDURL}`,
         methods: ["GET" , "POST" , "DELETE" , "PATCH" , "PUT"],     
-        credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization'] 
     }
 ));

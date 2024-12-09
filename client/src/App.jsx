@@ -17,7 +17,6 @@ function App() {
   useEffect(() => {
     if(!isLoggedin ){
       axios.get('/user').then(({data}) => {
-        console.log(data);
         if(data.name !== null && data.email !== null && data.id !== null){
           dispatch(login(data));
         }

@@ -10,9 +10,7 @@ import { toast } from "react-toastify";
 export default function MainPage() {
     const isLoggedIn = useSelector((state) => state.auth.status);
     const userID = useSelector((state) => state.auth.userData?.id ?? null);
-    console.log(userID);
     const [shortId, setShortId] = useState(null);
-
 
     async function handleShortenSubmit(ev) {
         ev.preventDefault();

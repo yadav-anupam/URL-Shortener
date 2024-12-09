@@ -16,10 +16,9 @@ app.listen(PORT, () => {console.log(`Server is running on port ${PORT}`);});
 
 app.use(cors(
     {
-        origin: process.env.FRONTENDURL,
+        origin: `${process.env.FRONTENDURL}`,
         methods: ["GET" , "POST" , "DELETE" , "PATCH" , "PUT"],     
         credentials: true,
-        optionSuccessStatus:200
     }
 ));
 

@@ -23,12 +23,11 @@ app.use(cors(
     }
 ));
 
-app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.use('/url', urlRouter);
+app.use("/url", urlRouter);
 app.use("/user" , userRouter);
 
